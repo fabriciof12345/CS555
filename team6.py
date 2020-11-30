@@ -188,7 +188,7 @@ def noBigamy(individual):
 
     families = gedcom_parser.get_families(individual)
 
-    marraigeDateRanges = []
+    marriageDateRanges = []
     for family in families:
         marriageDate = None
         divorceDate = None
@@ -202,11 +202,11 @@ def noBigamy(individual):
         if divorceDate == None:
             divorceDate = dt.now()
 
-        marraigeDateRanges.append((marriageDate, divorceDate))
+        marriageDateRanges.append((marriageDate, divorceDate))
     
-    marraigeDateIntervals = pandas.arrays.IntervalArray.from_tuples(marraigeDateRanges)
+    marriageDateRanges = pandas.arrays.IntervalArray.from_tuples(marriageDateRanges)
 
-    if marraigeDateIntervals.is_non_overlapping_monotonic:
+    if marriageDateRanges.is_non_overlapping_monotonic:
         return True
     else:
         print(
