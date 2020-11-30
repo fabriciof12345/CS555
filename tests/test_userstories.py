@@ -84,6 +84,16 @@ class TestMultipleBirths(unittest.TestCase):
         self.assertFalse(team6.multipleBirths(team6.processGedcomFamily(
             "tests/GEDCOM files for unit testing/US11-US14/test04.ged")), 'More than 5 births occurred at once')
 
+class TestListErrors(unittest.TestCase):
+    def test_correct(self):
+        self.assertTrue(team6.listErrors(team6.processGedcom(
+            "tests/GEDCOM files for unit testing/US02-US03/test02.ged")), 'At least one error occurred')
+    
+    def test_incorrect(self):
+        self.assertFalse(team6.listErrors(team6.processGedcom(
+            "tests/GEDCOM files for unit testing/US02-US03/test01.ged")), 'No errors occurred')
+        
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
