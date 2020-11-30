@@ -5,12 +5,13 @@ from gedcom.element.element import Element
 from gedcom.element.individual import IndividualElement
 from gedcom.element.family import FamilyElement
 
+INDI_DICT = {}
+INDI_TABLE = PrettyTable()
+INDI_TABLE.field_names = ["ID", "Name", "Gender",
+                          "Birthday", "Age", "Alive", "Death", "Child", "Spouse"]
+
 
 def print_under_6(tempDICT):
-    INDI_DICT = {}
-    INDI_TABLE = PrettyTable()
-    INDI_TABLE.field_names = ["ID", "Name", "Gender",
-                             "Birthday", "Age", "Alive", "Death", "Child", "Spouse"]
     child = ""
     for key, value in tempDICT.items():
         if value[3] < 6:
@@ -52,3 +53,4 @@ def print_under_6(tempDICT):
 
     print("\nIndividuals under 6")
     print(INDI_TABLE)
+    return True

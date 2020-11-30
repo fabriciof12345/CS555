@@ -451,7 +451,7 @@ for x, y in FAM_DICT.items():
 print("\nFamilies")
 print(FAM_TABLE)
 
-US47.print_under_6(INDI_DICT)
+bool = US47.print_under_6(INDI_DICT)
 
 with open('Tables.txt', 'w') as w:
     w.write(str("Individuals\n"))
