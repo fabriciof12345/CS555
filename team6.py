@@ -13,6 +13,7 @@ import US24
 import US13
 import US17
 import US47
+import US48
 import sys
 from datetime import datetime as dt
 import datetime
@@ -447,6 +448,8 @@ for x, y in FAM_DICT.items():
         print("Children born or conceived after death of parent")
     if not US24.unique_spouses(FAM_DICT):
         print("Married couple do not have unique spouses.")
+    if not US48.childbirthsOnMarriage(FAM_DICT,INDI_DICT):
+        print("Children can not be born on date of Marriage")
 
 print("\nFamilies")
 print(FAM_TABLE)
