@@ -8,6 +8,11 @@ from gedcom.element.element import Element
 from gedcom.element.individual import IndividualElement
 from gedcom.element.family import FamilyElement
 import UniqueChecker
+import US09
+import US24
+import US13
+import US17
+import US46
 import sys
 from datetime import datetime as dt
 import datetime
@@ -202,7 +207,7 @@ def noBigamy(individual):
             divorceDate = dt.now()
 
         marraigeDateRanges.append((marriageDate, divorceDate))
-    
+
     marraigeDateIntervals = pandas.arrays.IntervalArray.from_tuples(marraigeDateRanges)
 
     if marraigeDateIntervals.is_non_overlapping_monotonic:
@@ -421,6 +426,8 @@ for x, y in FAM_DICT.items():
                 #print(x[1])
                 children.append(x[1].replace("@",""))
         #print(children)
+    output2.append(children)
+    FAM_TABLE.add_row(output2)
     #Checks for unique names and birthdays
     if not UniqueChecker.uniqueFirstNameFam(children, INDI_DICT):
         print("Children do not have unique names and birthdays")
@@ -432,11 +439,20 @@ for x, y in FAM_DICT.items():
     #User Story 15, Children cannot have more than 15 siblings
     if len(children) > 15:
         print("Greater than 15 siblings")
-    output2.append(children)
-    FAM_TABLE.add_row(output2)
+    if not US13.childbirths(FAM_DICT, INDI_DICT):
+        print("Children Births are not spaced out in proper manner.")
+    if not US17.parentsNotMarriedToChildren(FAM_DICT):
+        print("Children Married to Parents")
+    if not US09.birth_before_death(FAM_DICT, INDI_DICT):
+        print("Children born or conceived after death of parent")
+    if not US24.unique_spouses(FAM_DICT):
+        print("Married couple do not have unique spouses.")
 
 print("\nFamilies")
 print(FAM_TABLE)
+
+US46.print_under_6(INDI_DICT)
+
 with open('Tables.txt', 'w') as w:
     w.write(str("Individuals\n"))
     w.write(str(INDI_TABLE))
