@@ -12,7 +12,7 @@ import US09
 import US24
 import US13
 import US17
-import US46
+import US47
 import sys
 from datetime import datetime as dt
 import datetime
@@ -451,7 +451,7 @@ for x, y in FAM_DICT.items():
 print("\nFamilies")
 print(FAM_TABLE)
 
-US46.print_under_6(INDI_DICT)
+US47.print_under_6(INDI_DICT)
 
 with open('Tables.txt', 'w') as w:
     w.write(str("Individuals\n"))
