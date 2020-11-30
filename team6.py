@@ -56,7 +56,6 @@ INDI_DICT = {}
 FAM_DICT = {}
 INDI_FAM = True
 file_path = 'DiazJGedcomProject1.ged'  # Path to your `.ged` file
-# file_path = 'tests/GEDCOM files for unit testing/US11-US14/test02.ged'  # Path to your `.ged` file
 
 INDI_TABLE = PrettyTable()
 FAM_TABLE = PrettyTable()
@@ -281,7 +280,7 @@ def listErrors(individual):
     return not all(results)
 
 
-showFamilyTree(root_child_elements)
+# showFamilyTree(root_child_elements)
 
 for element in root_child_elements:
     if isinstance(element, IndividualElement):
