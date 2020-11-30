@@ -56,6 +56,7 @@ INDI_DICT = {}
 FAM_DICT = {}
 INDI_FAM = True
 file_path = 'DiazJGedcomProject1.ged'  # Path to your `.ged` file
+# file_path = 'tests/GEDCOM files for unit testing/US11-US14/test02.ged'  # Path to your `.ged` file
 
 INDI_TABLE = PrettyTable()
 FAM_TABLE = PrettyTable()
@@ -251,9 +252,9 @@ def showFamilyTree(root_child_elements):
                 with graphGroup.subgraph() as s:
                     s.attr(rank='same')
                     
-                    s.node(husband.get_pointer(), label=husband.get_name()[0])
+                    s.node(husband.get_pointer(), label=husband.get_name()[0], color='blue', style='filled', fillcolor= 'red' if listErrors(husband) else 'white')
                     s.node(str(cluster), shape='point')
-                    s.node(wife.get_pointer(), label=wife.get_name()[0])
+                    s.node(wife.get_pointer(), label=wife.get_name()[0], color='lightpink', style='filled', fillcolor= 'red' if listErrors(wife) else 'white')
                     family.edge(husband.get_pointer(), str(cluster), label='husband')
                     family.edge(str(cluster), wife.get_pointer(), label='wife')
 
@@ -264,14 +265,23 @@ def showFamilyTree(root_child_elements):
                     s.node(str(cluster)+"_1", shape='point')
                     family.edge(str(cluster), str(cluster)+"_1", label='children')
                     for child in children:
-                        s.node(child.get_pointer(), label=child.get_name()[0])
+                        s.node(child.get_pointer(), label=child.get_name()[0], color='black', style='filled', fillcolor= 'red' if listErrors(child) else 'white')
                         family.edge(str(cluster)+"_1", child.get_pointer())
             cluster += 1
             
     family.view()
     return
 
+def listErrors(individual):
+    """US53 - Return True if the given individual has any of the individual errors listed in this file""" #TODO: add other errors implemented elsewhere
 
+    results = [birthBeforeMarriage(individual), birthBeforeDeath(individual), marriageBeforeDeath(individual), 
+            datesBeforeCurrentDate(individual), noBigamy(individual)]
+    results = [x for x in results if x is not None]
+    return not all(results)
+
+
+showFamilyTree(root_child_elements)
 
 for element in root_child_elements:
     if isinstance(element, IndividualElement):
@@ -285,8 +295,6 @@ for element in root_child_elements:
 
     if isinstance(element, FamilyElement):
         multipleBirths(element)
-
-showFamilyTree(root_child_elements)
 
 
 
