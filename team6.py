@@ -204,9 +204,9 @@ def noBigamy(individual):
 
         marriageDateRanges.append((marriageDate, divorceDate))
     
-    marriageDateRanges = pandas.arrays.IntervalArray.from_tuples(marriageDateRanges)
+    marriageDateIntervals = pandas.arrays.IntervalArray.from_tuples(marriageDateRanges)
 
-    if marriageDateRanges.is_non_overlapping_monotonic:
+    if marriageDateIntervals.is_non_overlapping_monotonic:
         return True
     else:
         print(
