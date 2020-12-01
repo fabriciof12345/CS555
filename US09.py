@@ -19,7 +19,6 @@ def birth_before_death(famDICT, INDI_DICT):
                 children.append(INDI_DICT.get(i[1]))
         for j in children:
             children_birth.append(datetime.strptime(j[2], "%d %b %Y"))
-        print(children_birth)
         husbID = INDI_DICT.get(husbID)
         wifeID = INDI_DICT.get(wifeID)
         if not wifeID[4]:
